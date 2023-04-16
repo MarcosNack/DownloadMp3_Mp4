@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>Cancel_icon-icons.com_73703.png</file>
+    <file>icons8-baixar-30.png</file>
+    <file>icons8-cancelar-30.png</file>
+    <file>youtubedl_93529.ico</file>
+  </qresource>
+</RCC>

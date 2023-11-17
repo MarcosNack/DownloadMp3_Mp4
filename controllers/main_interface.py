@@ -8,11 +8,7 @@ from views.main_interface import Ui_TelaDownload
 
 from msgbox.msgboxpadrao import *
 
-import youtube_dl
-
 from pytube import Playlist
-
-from time import sleep
 
 class DownloadYoutube(QMainWindow, Ui_TelaDownload):
     def __init__(self):
@@ -23,7 +19,6 @@ class DownloadYoutube(QMainWindow, Ui_TelaDownload):
         self.label.setText('Version 1.0.0')
         #Ocultar Barra de Status
         self.qf_status_bar.setVisible(False)
-        
         #Incluir o icone na interface
         icon = QIcon(r"icon.ico")
         self.setWindowIcon(icon)
@@ -35,14 +30,12 @@ class DownloadYoutube(QMainWindow, Ui_TelaDownload):
         self.btn_link.clicked.connect(self.SelectCaminho)
         self.btn_link.setText("")
         self.btn_link.setVisible(False)
-        
         #Variável caminho
         self.caminho_salvar = ""
 
     def SelectCaminho(self):
         self.caminho_salvar = QFileDialog.getExistingDirectory(self, "Selecione a pasta p/Salvar", self.caminho_salvar)
         self.btn_link.setText(f"Caminho: {self.caminho_salvar}. Click aqui para alterar o caminho.")
-        
         
     def yt_downloader(self):
         self.qf_status_bar.setVisible(True)
@@ -54,33 +47,22 @@ class DownloadYoutube(QMainWindow, Ui_TelaDownload):
         if not self.rbtn_mp3.isChecked() and not self.rbtn_mp4.isChecked(): #Validar se foi marcado a opção para Download
             if valid == "":
                 valid = "--> Selecionar uma das opções para Download."
-
             else:
                 valid = f"{valid}\n--> Selecionar uma das opções para Download."
-
         if valid != "":
             msg_info = f'Por gentileza preencher o(s) campo(s) abaixo:\n{valid}'
             MsgBoxErro(self, msg_info=msg_info)
-
         else:
             #Selecionar a pasta para salvar o arquivo
             if self.caminho_salvar == "":
                 self.caminho_salvar = QFileDialog.getExistingDirectory(self, "Selecione a pasta p/Salvar")
-                
                 self.btn_link.setText(f"Caminho: {self.caminho_salvar}. Click aqui para alterar o caminho.")
                 self.btn_link.setVisible(True)
-                
                         
-            # else:
-            #     self.caminho_salvar = QFileDialog.getExistingDirectory(self, "Selecione a pasta p/Salvar", self.caminho_salvar)
-                                                                   
             if self.caminho_salvar == "":
                 msg_info = f'Por gentileza definir a pasta para salvar o(s) arquivo(s)!'
                 MsgBoxErro(self, msg_info=msg_info)
-
             else:  
-                
-                
                 self.Download()
 
             self.qf_status_bar.setVisible(False)
@@ -102,10 +84,8 @@ class DownloadYoutube(QMainWindow, Ui_TelaDownload):
                                                 
                         msf_info = f"{msf_info}Playlist {status_download['MSG_INFO']}\n"
                     MsgBoxInformation(self, msg_info=msf_info)
-    
                 else:
                     MsgBoxErro(self, "Playlist Invalida...")                    
-             
             else:
                 #Baixar o mp3 individual     
                 status_download = DownloadYoutubeMp3(youtube_video_url=link, caminho_salvar=self.caminho_salvar)
@@ -114,9 +94,7 @@ class DownloadYoutube(QMainWindow, Ui_TelaDownload):
         elif self.rbtn_mp4.isChecked():
             if self.chb_baixar_playlist.isChecked():                
                 #Baixar a Playlist MP4
-                #Baixar a Playlist MP4
                 playlist = Playlist(link)
-                                    
                 # playlist = Playlist(link)
                 msf_info = ""
                 if len(playlist) > 0:                    
